@@ -4,7 +4,9 @@ FROM continuumio/miniconda3:4.3.14
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
 RUN chmod +x /usr/local/bin/dumb-init
 
-RUN conda install --yes -c conda-forge \
+RUN conda install --yes \
+    -c defaults \
+    -c conda-forge \
     cython \
     cytoolz \
     dask=0.17.4 \
@@ -31,12 +33,16 @@ RUN apt-get update \
 
 RUN pip install --upgrade pip
 
-RUN pip install pyasn1 click urllib3 fusepy s3fs \
+RUN pip install click urllib3 fusepy s3fs \
                 gcsfs==0.1.0 zarr==2.2.0 xarray==0.10.4 \
                 --upgrade --no-cache-dir
 
+RUN pip install git+https://github.com/dask/dask@bf5cfb01da7c6bc13f6e968df307f0352cb942ff \
+                git+https://github.com/dask/distributed@13eebb6d660c379e8a2fc8e3c9b7474ba4dd5e4a \
+                --upgrade --no-cache-dir --no-deps
+
 ENV OMP_NUM_THREADS=1
-ENV DASK_TICK_MAXIMUM_DELAY=5s
+ENV DASK_DISTRIBUTED__ADMIN__TICK__LIMIT=5s
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
