@@ -7,53 +7,39 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
 
-RUN conda install --yes -c defaults -c pyviz/label/dev -c bokeh/channel/dev -c intake \
-    bokeh=0.12.16 \
+RUN conda install --yes -c pyviz pyviz
+RUN conda install --yes -c conda-forge/label/dev rasterio
+RUN conda install --yes -c conda-forge \
     cython \
     cytoolz \
-    dask=0.17.5 \
     dask-ml \
-    datashader \
-    distributed=1.21.8 \
+    erddapy \
     fastparquet \
-    ipywidgets \
-    jupyterlab=0.32.1 \
-    jupyterlab_launcher=0.10.5 \
-    holoviews \
+    gcsfs \
+    jedi \
+    jupyterlab \
+    jupyterlab_launcher \
     lz4 \
     matplotlib \
     nb_conda_kernels \
+    nbserverproxy \
     netcdf4 \
     nomkl \
-    numba \
     numcodecs \
-    numpy=1.14.3 \
-    pandas \
     python-blosc \
-    scipy \
-    scikit-image \
+    s3fs \
     scikit-learn \
-    tornado \
-    zict \
-    intake-xarray \
+    utide \
+    websocket-client \
+    xarray \
     && conda clean -tipsy
 
 RUN pip install --upgrade pip
 
-RUN pip install fusepy click jedi kubernetes==4.0.0 dask-kubernetes s3fs \
-                gcsfs==0.1.0 zarr==2.2.0 xarray==0.10.4 \
-                nbserverproxy==0.8.1 \
-                --upgrade --no-cache-dir
+RUN pip install fusepy  kubernetes==4.0.0 dask-kubernetes \
+        git+https://github.com/xgcm/xgcm \
+        --upgrade --no-cache-dir
 
-RUN pip install git+https://github.com/xgcm/xgcm \
-                --no-cache-dir \
-                --upgrade
-
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
-                                 @jupyterlab/hub-extension \
-                                 @pyviz/jupyterlab_pyviz
-
-RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
