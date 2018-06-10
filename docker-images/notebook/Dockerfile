@@ -8,8 +8,9 @@ RUN apt-get update \
 USER $NB_USER
 
 RUN conda update -n base conda
-RUN conda install --yes -c conda-forge/label/dev rasterio
-RUN conda install --yes -c conda-forge \
+RUN conda config --add channels conda-forge --force
+RUN conda update --yes --all
+RUN conda install --yes  \
     cython \
     dask-kubernetes \
     erddapy \
@@ -21,6 +22,7 @@ RUN conda install --yes -c conda-forge \
     nbserverproxy \
     palettable \
     python-blosc \
+    conda-forge/label/dev::rasterio \
     s3fs \
     siphon \
     utide \
