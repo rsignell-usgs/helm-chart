@@ -7,39 +7,26 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
 
-RUN conda install --yes -c pyviz pyviz
+RUN conda update -n base conda
 RUN conda install --yes -c conda-forge/label/dev rasterio
 RUN conda install --yes -c conda-forge \
     cython \
-    cytoolz \
-    dask-ml \
+    dask-kubernetes \
     erddapy \
-    fastparquet \
-    gcsfs \
-    jedi \
-    jupyterlab \
-    jupyterlab_launcher \
+    fusepy \
+    geoviews \
+    gridgeo \
     lz4 \
-    matplotlib \
     nb_conda_kernels \
     nbserverproxy \
-    netcdf4 \
-    nomkl \
-    numcodecs \
+    palettable \
     python-blosc \
     s3fs \
-    scikit-learn \
+    siphon \
     utide \
     websocket-client \
-    xarray \
+    zarr \
     && conda clean -tipsy
-
-RUN pip install --upgrade pip
-
-RUN pip install fusepy  kubernetes==4.0.0 dask-kubernetes \
-        git+https://github.com/xgcm/xgcm \
-        --upgrade --no-cache-dir
-
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
