@@ -13,6 +13,7 @@ RUN conda update --yes --all
 RUN conda install --yes  \
     cython \
     dask-kubernetes \
+    dask-tensorflow \
     erddapy \
     fusepy \
     geoviews \
@@ -20,11 +21,15 @@ RUN conda install --yes  \
     lz4 \
     nb_conda_kernels \
     nbserverproxy \
+    opencv \
     palettable \
+    pydensecrf \
     python-blosc \
     conda-forge/label/dev::rasterio \
     s3fs \
     siphon \
+    tensorflow \
+    tensorflow-hub \
     utide \
     websocket-client \
     zarr \
