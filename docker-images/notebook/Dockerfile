@@ -2,7 +2,8 @@ FROM jupyter/base-notebook
 
 USER root
 RUN apt-get update \
-  && apt-get install -yq --no-install-recommends libfuse-dev nano fuse vim git \
+  && apt-get install -yq --no-install-recommends \
+         libfuse-dev nano fuse vim git libxext6 libgl1-mesa-glx \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
