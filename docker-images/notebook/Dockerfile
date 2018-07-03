@@ -28,9 +28,12 @@ RUN conda install --yes  \
     python-blosc \
     conda-forge/label/dev::rasterio \
     s3fs \
+    scikit-image \
+    scikit-learn \
     siphon \
     tensorflow \
     tensorflow-hub \
+    tqdm \
     utide \
     websocket-client \
     zarr \
