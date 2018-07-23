@@ -1,9 +1,9 @@
-FROM jupyter/base-notebook
+FROM jupyter/base-notebook:8d22c86ed4d7
 
 USER root
 RUN apt-get update \
   && apt-get install -yq --no-install-recommends \
-         libfuse-dev nano fuse vim git libxext6 libgl1-mesa-glx \
+         libfuse-dev nano fuse vim git graphviz \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
@@ -61,18 +61,14 @@ COPY prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
 RUN mkdir /home/$NB_USER/examples && chown -R $NB_USER /home/$NB_USER/examples
 RUN mkdir /pre-home && mkdir /pre-home/examples && chown -R $NB_USER /pre-home
+
+ENV DASK_CONFIG=/home/$NB_USER/config.yaml
+COPY config.yaml /pre-home
 COPY worker-template.yaml /pre-home
+
 COPY examples/ /pre-home/examples/
 
-ENV DASK_TICK_MAXIMUM_DELAY=5s
-ENV DASKERNETES_DIAGNOSTICS_LINK {JUPYTERHUB_SERVICE_PREFIX}proxy/{port}/status
-ENV DASKERNETES_WORKER_TEMPLATE_PATH /home/$NB_USER/worker-template.yaml
-ENV DASKERNETES_WORKER_NAME dask-{JUPYTERHUB_USER}-{uuid}
-ENV DASK_DIAGNOSTICS_LINK {JUPYTERHUB_SERVICE_PREFIX}proxy/{port}/status
-ENV DASK_KUBERNETES_WORKER_TEMPLATE_PATH /home/$NB_USER/worker-template.yaml
-ENV DASK_KUBERNETES_WORKER_NAME dask-{JUPYTERHUB_USER}-{uuid}
-
-RUN mkdir /gcs && chown -R $NB_USER /gcs
+RUN mkdir /s3 && chown -R $NB_USER /s3
 RUN mkdir /opt/app
 
 # Add NB_USER to sudo
