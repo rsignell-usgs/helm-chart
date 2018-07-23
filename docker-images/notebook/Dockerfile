@@ -12,30 +12,47 @@ RUN conda update -n base conda
 RUN conda config --add channels conda-forge --force
 RUN conda update --yes --all
 RUN conda install --yes  \
+    appmode \
+    arrow \
+    bqplot \
     cython \
     dask-kubernetes \
+    dask-ml \
     dask-tensorflow \
+    datashader \
     erddapy \
+    folium \
     fusepy \
+    geolinks \
+    geopandas \
     geoviews \
     gridgeo \
+    ioos_tools \
+    ipyleaflet \
+    iris>=1.12 \
     lz4 \
     nb_conda_kernels \
     nbserverproxy \
     opencv \
     palettable \
+    pendulum \
+    pyoos \
     pydensecrf \
     python-blosc \
     conda-forge/label/dev::rasterio \
+    retrying \
+    rise \
     s3fs \
     scikit-image \
     scikit-learn \
+    shapely \
     siphon \
     tensorflow \
     tensorflow-hub \
     tqdm \
     utide \
     websocket-client \
+    xlrd \
     zarr \
     && conda clean -tipsy
 
