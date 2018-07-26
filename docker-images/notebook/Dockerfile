@@ -1,9 +1,9 @@
-FROM jupyter/base-notebook:8d22c86ed4d7
+FROM jupyter/base-notebook
 
 USER root
 RUN apt-get update \
   && apt-get install -yq --no-install-recommends \
-         libfuse-dev nano fuse vim git graphviz \
+         libfuse-dev nano fuse vim git libxext6 libgl1-mesa-glx \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
@@ -14,6 +14,7 @@ RUN conda update --yes --all
 RUN conda install --yes  \
     appmode \
     arrow \
+    bokeh \
     bqplot \
     cython \
     dask-kubernetes \
