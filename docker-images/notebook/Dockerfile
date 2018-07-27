@@ -1,20 +1,17 @@
-FROM jupyter/base-notebook
+FROM jupyter/base-notebook:8d22c86ed4d7
 
 USER root
 RUN apt-get update \
   && apt-get install -yq --no-install-recommends \
-         libfuse-dev nano fuse vim git libxext6 libgl1-mesa-glx \
+         libfuse-dev nano fuse vim git graphviz \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
 
-RUN conda update -n base conda
-RUN conda config --add channels conda-forge --force
-RUN conda update --yes --all
 RUN conda install --yes  \
     appmode \
     arrow \
-    bokeh \
+    bokeh=0.12.16 \
     bqplot \
     cython \
     dask-kubernetes \
@@ -27,6 +24,7 @@ RUN conda install --yes  \
     geolinks \
     geopandas \
     geoviews \
+    graphviz \
     gridgeo \
     ioos_tools \
     ipyleaflet \
@@ -40,6 +38,7 @@ RUN conda install --yes  \
     pyoos \
     pydensecrf \
     python-blosc \
+    python-graphviz \
     conda-forge/label/dev::rasterio \
     retrying \
     rise \
@@ -57,13 +56,15 @@ RUN conda install --yes  \
     zarr \
     && conda clean -tipsy
 
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
+                                 @pyviz/jupyterlab_pyviz
+
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
 RUN mkdir /home/$NB_USER/examples && chown -R $NB_USER /home/$NB_USER/examples
 RUN mkdir /pre-home && mkdir /pre-home/examples && chown -R $NB_USER /pre-home
 
-ENV DASK_CONFIG=/home/$NB_USER/config.yaml
 COPY config.yaml /pre-home
 COPY worker-template.yaml /pre-home
 
