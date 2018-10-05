@@ -1,0 +1,10 @@
+[s3-west]
+type = s3
+provider = AWS
+env_auth = false
+access_key_id = AKIAJWVSISGV5SMOI7YA
+secret_access_key = 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
+region = us-west-2
+location_constraint = us-west-2
+acl = public-read
+storage_class = 

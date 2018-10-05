@@ -7,6 +7,13 @@ spec:
         options:
           readonly: "true"
       name: s3
+    - flexVolume:
+        driver: informaticslab/goofys-flex-volume
+        options:
+          bucket: "esipfed-scratch"
+          dirMode: "0777"
+          fileMode: "0777"
+      name: scratch
   containers:
   - args:
       - dask-worker
@@ -17,7 +24,7 @@ spec:
       - 6GB
       - --death-timeout
       - '60'
-    image: esip/pangeo-notebook:2018-07-27d
+    image: esip/pangeo-notebook:2018-09-21
     name: dask-worker
     securityContext:
       capabilities:
@@ -27,6 +34,8 @@ spec:
     volumeMounts:
     - mountPath: /s3
       name: s3
+    - mountPath: /scratch
+      name: scratch
     resources:
       limits:
         cpu: "1.75"

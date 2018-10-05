@@ -2,10 +2,28 @@
 
 set -x
 
-echo "Copy Dask configuration files from pre-load directory into home/.config"
-mkdir -p /home/jovyan/.config/dask
-cp --update -r -v /pre-home/config.yaml /home/jovyan/.config/dask/
-cp --update -r -v /pre-home/worker-template.yaml /home/jovyan/.config/dask/
+echo "Copy Dask configuration files from pre-load directory into /home/jovyan"
+cp --update -r -v /pre-home/. /home/jovyan
+
+if [ -z "$EXAMPLES_GIT_URL" ]; then
+    export EXAMPLES_GIT_URL=https://github.com/ESIPFed/pangeo-example-notebooks
+fi
+rmdir examples &> /dev/null # deletes directory if empty, in favour of fresh clone
+if [ ! -d "examples" ]; then
+  git clone $EXAMPLES_GIT_URL examples
+fi
+cd examples
+git remote set-url origin $EXAMPLES_GIT_URL
+git fetch origin
+git reset --hard origin/master
+git merge --strategy-option=theirs origin/master
+if [ ! -f DONT_SAVE_ANYTHING_HERE.md ]; then
+  echo "Files in this directory should be treated as read-only"  > DONT_SAVE_ANYTHING_HERE.md
+fi
+cd ..
+
+mkdir -p work
+
 
 if [ -e "/opt/app/environment.yml" ]; then
     echo "environment.yml found. Installing packages"
