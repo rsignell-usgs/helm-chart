@@ -4,15 +4,18 @@ FROM continuumio/miniconda3:4.3.14
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
 RUN chmod +x /usr/local/bin/dumb-init
 
+RUN conda update conda --yes  && \
+conda config --remove channels defaults && \
+conda config --add channels conda-forge && \
+conda update -all -y -q 
+
 RUN conda install --yes \
-    -c defaults \
-    -c conda-forge \
-    bokeh=0.12.16 \
-    cloudpickle=0.5.3 \
+    bokeh \
+    cloudpickle \
     cython \
     cytoolz \
-    dask=0.18.2 \
-    distributed=1.22.1 \
+    dask \
+    distributed \
     esmpy \
     fastparquet \
     git \
@@ -22,16 +25,16 @@ RUN conda install --yes \
     nomkl \
     numba \
     numcodecs \
-    numpy=1.15.1 \
-    pandas=0.23.2 \
+    numpy \
+    pandas \
     python-blosc \
     s3fs \
     scikit-image \
-    toolz=0.9.0 \
-    tornado=5.0.2 \
+    toolz \
+    tornado \
     scipy \
-    xarray==0.10.8 \
-    zarr==2.2.0 \
+    xarray\
+    zarr \
     zict \
     && conda clean -tipsy
 
