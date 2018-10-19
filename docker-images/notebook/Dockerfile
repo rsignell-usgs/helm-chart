@@ -6,7 +6,7 @@ RUN apt-get update \
   && apt-get install -yq --no-install-recommends \
          libfuse-dev nano fuse vim git graphviz libgl1-mesa-glx \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/
 USER $NB_USER
 
 RUN conda update conda --yes  
@@ -14,15 +14,20 @@ RUN conda update conda --yes
 RUN conda config --remove channels defaults
 
 RUN conda install --yes  \
+    python=3.6 \
+    pyviz/label/earthsim::bokeh \
+    pyviz/label/earthsim::holoviews \
+    pyviz/label/earthsim::datashader \
+    pyviz/label/earthsim::geoviews-core \
+    pyviz/label/earthsim::geoviews \
+    pyviz/label/earthsim::panel \
     appmode \
     arrow \
-    bokeh \
     bqplot \
     cython \
     dask-kubernetes \
     dask-ml \
     dask-tensorflow \
-    datashader \
     erddapy \
     fastparquet \
     folium \
@@ -30,7 +35,6 @@ RUN conda install --yes  \
     gcsfs \
     geolinks \
     geopandas \
-    geoviews \
     graphviz \
     gridgeo \
     hvplot \
