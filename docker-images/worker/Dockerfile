@@ -7,7 +7,7 @@ RUN chmod +x /usr/local/bin/dumb-init
 RUN conda update conda --yes  && \
 conda config --remove channels defaults && \
 conda config --add channels conda-forge && \
-conda update -all -y -q 
+conda update -all --yes --quiet
 
 RUN conda install --yes \
     bokeh \
