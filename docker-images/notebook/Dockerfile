@@ -9,17 +9,18 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 USER $NB_USER
 
-RUN conda update conda --yes  && conda config --remove channels defaults
+RUN conda update conda --yes \
+  && conda config --remove channels defaults
 
 RUN conda install --yes  \
     appmode \
     arrow \
-    bokeh \
+    pyviz/label/earthsim::bokeh \
     bqplot \
-	click \
+    click \
     cython  \
-	cytoolz \
-	dask \
+    cytoolz \
+    dask \
     dask-kubernetes \
     dask-ml \
     dask-tensorflow \
@@ -27,37 +28,38 @@ RUN conda install --yes  \
     distributed \
     esmpy \
     fastparquet \
-	fusepy \
-	pyviz/label/earthsim::holoviews=1.11.0a6 \
-	hvplot \
-	intake::intake \
-    intake::intake-xarray \
-	intake::intake-parquet \
-	geoviews \
+    fusepy \
+    geoviews \
     gcsfs \
-	graphviz \
+    graphviz \
+    gsw \
+    pyviz/label/earthsim::holoviews \
+    hvplot \
+    intake::intake \
+    intake::intake-xarray \
     ipywidgets \
     ipyleaflet \
-	jedi \
+    jedi \
     jupyter \
     jupyterlab=0.34 \
     jupyterlab_launcher \
     jupyter_client \
-	kubernetes \
+    kubernetes \
     libsodium \
     lz4 \
     matplotlib \
     msgpack-python \
     nb_conda_kernels \
-	nbserverproxy \
+    nbserverproxy \
     netcdf4 \
     nomkl \
     numba \
     numcodecs \
     numpy \
     pandas \
-	panel \
+    panel \
     python-blosc \
+    python-graphviz \
     pyzmq \
     s3fs \
     scipy \
@@ -66,13 +68,9 @@ RUN conda install --yes  \
     toolz \
     tornado \
     xarray \
-	xesmf \
+    xesmf \
     zarr \
     zict \
-    intake-xarray \
-    graphviz \
-    python-graphviz \
-    gsw \
     && conda clean -tipsy
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
