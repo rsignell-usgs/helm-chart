@@ -21,6 +21,8 @@ RUN conda install --yes  \
     pyviz/label/earthsim::geoviews-core \
     pyviz/label/earthsim::geoviews \
     pyviz/label/earthsim::panel \
+    intake::intake \
+    intake::intake-xarray \
     appmode \
     arrow \
     bqplot \
@@ -29,13 +31,13 @@ RUN conda install --yes  \
     dask-ml \
     dask-tensorflow \
     erddapy \
+    esmpy \
     fastparquet \
     folium \
     fusepy \
     gcsfs \
     geolinks \
     geopandas \
-    graphviz \
     gridgeo \
     hvplot \
     ioos_tools \
@@ -68,6 +70,8 @@ RUN conda install --yes  \
     tqdm \
     utide \
     websocket-client \
+    xesmf \
+    xgcm \
     xlrd \
     zarr \
     && conda clean -tipsy
@@ -78,7 +82,6 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
                                  @jupyterlab/hub-extension \
                                  @pyviz/jupyterlab_pyviz \
                                  jupyter-leaflet  
-#                                 dask-labextension 
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
