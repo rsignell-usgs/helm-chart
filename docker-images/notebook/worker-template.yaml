@@ -11,7 +11,7 @@ spec:
       - 6GB
       - --death-timeout
       - '60'
-    image: pangeo/notebook:ede11f6
+    image: rsignell/pangeo-gcs-notebook:2018-10-22
     name: dask-worker
     securityContext:
       capabilities:
