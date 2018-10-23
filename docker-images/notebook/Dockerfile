@@ -13,7 +13,7 @@ RUN conda update conda --yes \
   && conda config --add channels conda-forge \
   && conda config --remove channels defaults \
   && conda install -c conda-forge --yes \
-    bokeh \
+    pyviz/label/earthsim::bokeh \
     bqplot \
     click \
     cython \
@@ -26,8 +26,11 @@ RUN conda update conda --yes \
     esmpy \
     fastparquet \
     fusepy \
+    pyviz/label/earthsim::holoviews \
     gcsfs \
+    geoviews \
     gsw \
+    hvplot \
     intake::intake \
     intake::intake-xarray \
     ipywidgets \
@@ -36,7 +39,6 @@ RUN conda update conda --yes \
     jupyterlab=0.34 \
     jupyterlab_launcher \
     jupyter_client \
-    holoviews \
     libsodium \
     lz4 \
     matplotlib \
@@ -49,6 +51,7 @@ RUN conda update conda --yes \
     numcodecs \
     numpy \
     pandas \
+    panel \
     python-blosc \
     python-graphviz \
     pyzmq \
