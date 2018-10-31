@@ -15,13 +15,11 @@ RUN conda config --remove channels defaults
 
 RUN conda install --yes  \
     python=3.6 \
-    pyviz/label/earthsim::bokeh \
-    pyviz/label/earthsim::holoviews \
-    pyviz/label/earthsim::datashader \
-    pyviz/label/earthsim::geoviews-core \
-    pyviz/label/earthsim::geoviews \
-    pyviz/label/earthsim::panel \
-    intake::intake \
+    bokeh \
+    holoviews \
+    datashader \
+    geoviews \
+    panel \
     intake::intake-xarray \
     appmode \
     arrow \
@@ -42,16 +40,20 @@ RUN conda install --yes  \
     hvplot \
     ioos_tools \
     ipyleaflet \
-    iris>=1.12 \
+    iris \
+    jupyter \
+    jupyterlab=0.35 \
+    jupyterlab_launcher \
+    jupyter_client \
     libiconv \
     lz4 \
-    nb_conda_kernels \
     nbserverproxy \
     opencv \
     owslib \
     palettable \
     pendulum \
     pyarrow \
+    pygam \
     pyoos \
     pydensecrf \
     python-blosc \
@@ -70,6 +72,7 @@ RUN conda install --yes  \
     tqdm \
     utide \
     websocket-client \
+    xarray \
     xesmf \
     xgcm \
     xlrd \
@@ -78,10 +81,17 @@ RUN conda install --yes  \
 
 RUN pip install --upgrade pip
 
+RUN pip install \
+    git+https://github.com/pydata/xarray.git \
+    git+https://github.com/dask/dask-kubernetes.git \
+                --upgrade --no-cache-dir \
+                --upgrade-strategy only-if-needed
+
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
-                                 @jupyterlab/hub-extension \
+                                 @jupyterlab/hub-extension@0.12 \
                                  @pyviz/jupyterlab_pyviz \
-                                 jupyter-leaflet  
+                                 jupyter-leaflet \
+                                 dask-labextension 
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
