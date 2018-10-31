@@ -25,7 +25,6 @@ RUN conda install --yes  \
     arrow \
     bqplot \
     cython \
-    dask-kubernetes \
     dask-ml \
     dask-tensorflow \
     erddapy \
@@ -48,6 +47,7 @@ RUN conda install --yes  \
     libiconv \
     lz4 \
     nbserverproxy \
+    ncurses=6.1 \
     opencv \
     owslib \
     palettable \
@@ -72,7 +72,6 @@ RUN conda install --yes  \
     tqdm \
     utide \
     websocket-client \
-    xarray \
     xesmf \
     xgcm \
     xlrd \
