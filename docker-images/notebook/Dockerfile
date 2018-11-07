@@ -9,11 +9,11 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/
 USER $NB_USER
 
-RUN conda update conda --yes  
+RUN $CONDA_DIR/bin/conda update conda --yes  
 
-RUN conda config --remove channels defaults
+RUN $CONDA_DIR/bin/conda config --system --remove channels defaults
 
-RUN conda install --yes  \
+RUN $CONDA_DIR/bin/conda install --yes  \
     python=3.6 \
     bokeh \
     holoviews \
@@ -25,8 +25,11 @@ RUN conda install --yes  \
     arrow \
     bqplot \
     cython \
+    dask-kubernetes \
     dask-ml \
     dask-tensorflow \
+    depfinder \
+    easyargs \
     erddapy \
     esmpy \
     fastparquet \
@@ -35,25 +38,26 @@ RUN conda install --yes  \
     gcsfs \
     geolinks \
     geopandas \
+    gitpython \
     gridgeo \
     hvplot \
     ioos_tools \
     ipyleaflet \
     iris \
     jupyter \
-    jupyterlab=0.35 \
+    jupyterlab=0.35.1 \
     jupyterlab_launcher \
     jupyter_client \
     libiconv \
     lz4 \
     nbserverproxy \
-    ncurses=6.1 \
     opencv \
     owslib \
     palettable \
     pendulum \
     pyarrow \
     pygam \
+    pynio \
     pyoos \
     pydensecrf \
     python-blosc \
@@ -61,6 +65,7 @@ RUN conda install --yes  \
     rasterio \
     retrying \
     rise \
+    ruamel.yaml \
     satsearch \
     s3fs \
     scikit-image \
@@ -72,15 +77,18 @@ RUN conda install --yes  \
     tqdm \
     utide \
     websocket-client \
+    xarray \
     xesmf \
     xgcm \
     xlrd \
     zarr \
-    && conda clean -tipsy
+    ncurses=6.1 \
+    && $CONDA_DIR/bin/conda clean -tipsy
 
 RUN pip install --upgrade pip
 
 RUN pip install \
+    git+https://github.com/ericdill/depfinder.git \
     git+https://github.com/pydata/xarray.git \
     git+https://github.com/dask/dask-kubernetes.git \
                 --upgrade --no-cache-dir \
