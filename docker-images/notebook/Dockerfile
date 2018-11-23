@@ -16,11 +16,13 @@ RUN $CONDA_DIR/bin/conda config --system --remove channels defaults
 RUN $CONDA_DIR/bin/conda install --yes  \
     python=3.6 \
     bokeh \
-    holoviews \
-    datashader \
-    geoviews \
-    panel \
+    intake::intake \
     intake::intake-xarray \
+    pyviz/label/earthsim::holoviews \
+    pyviz/label/earthsim::hvplot \
+    pyviz/label/earthsim::geoviews \
+    pyviz/label/earthsim::panel \
+    datashader \
     appmode \
     arrow \
     bqplot \
@@ -40,9 +42,9 @@ RUN $CONDA_DIR/bin/conda install --yes  \
     geopandas \
     gitpython \
     gridgeo \
-    hvplot \
     ioos_tools \
     ipyleaflet \
+    ipywidgets>=7.4.2 \
     iris \
     jupyter \
     jupyterlab=0.35.1 \
@@ -54,6 +56,7 @@ RUN $CONDA_DIR/bin/conda install --yes  \
     opencv \
     owslib \
     palettable \
+    pandas>=0.23.4 \
     pendulum \
     pyarrow \
     pygam \
@@ -89,8 +92,7 @@ RUN pip install --upgrade pip
 
 RUN pip install \
     git+https://github.com/ericdill/depfinder.git \
-    git+https://github.com/pydata/xarray.git \
-    git+https://github.com/dask/dask-kubernetes.git \
+    git+https://github.com/pyviz/EarthSim.git \
                 --upgrade --no-cache-dir \
                 --upgrade-strategy only-if-needed
 
