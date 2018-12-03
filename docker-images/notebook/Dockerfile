@@ -15,13 +15,18 @@ RUN $CONDA_DIR/bin/conda config --system --remove channels defaults
 
 RUN $CONDA_DIR/bin/conda install --yes  \
     python=3.6 \
-    bokeh \
     intake::intake \
     intake::intake-xarray \
-    pyviz/label/earthsim::holoviews \
-    pyviz/label/earthsim::hvplot \
-    pyviz/label/earthsim::geoviews \
-    pyviz/label/earthsim::panel \
+    pyviz/label/dev::holoviews \
+    pyviz/label/dev::hvplot \
+    pyviz/label/dev::geoviews \
+    pyviz/label/dev::panel \
+    bokeh \
+    ipywidgets>=7.4.2 \
+    pandas>=0.23.4 \
+    jupyterlab=0.35.1 \
+    ncurses=6.1 \
+    cartopy=0.16.0 \
     datashader \
     appmode \
     arrow \
@@ -44,19 +49,18 @@ RUN $CONDA_DIR/bin/conda install --yes  \
     gridgeo \
     ioos_tools \
     ipyleaflet \
-    ipywidgets>=7.4.2 \
     iris \
     jupyter \
-    jupyterlab=0.35.1 \
     jupyterlab_launcher \
     jupyter_client \
+    jupyter_contrib_nbextensions \
     libiconv \
     lz4 \
+    metpy \
     nbserverproxy \
     opencv \
     owslib \
     palettable \
-    pandas>=0.23.4 \
     pendulum \
     pyarrow \
     pygam \
@@ -85,12 +89,12 @@ RUN $CONDA_DIR/bin/conda install --yes  \
     xgcm \
     xlrd \
     zarr \
-    ncurses=6.1 \
     && $CONDA_DIR/bin/conda clean -tipsy
 
 RUN pip install --upgrade pip
 
 RUN pip install \
+    python-gist \
     git+https://github.com/ericdill/depfinder.git \
     git+https://github.com/pyviz/EarthSim.git \
                 --upgrade --no-cache-dir \
